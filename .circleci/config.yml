@@ -16,12 +16,12 @@ jobs:
   convert:
     docker:
       - image: jupyter/datascience-notebook
-      - command: docker run -p 8888:8888 -v ~/quickstart:/home/jovyan/quickstart jupyter/datascience-notebook
     working_directory: ~/quickstart
     steps:
       - run: 
           command: |
             %pwd
+            docker run -p 8888:8888 -v ~/quickstart:/home/jovyan/quickstart jupyter/datascience-notebook
             pip install jupyter
             pip install nb2hugo
             touch logs.txt
