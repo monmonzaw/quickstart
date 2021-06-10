@@ -16,11 +16,14 @@ jobs:
   convert:
     docker:
       - image: jupyter/datascience-notebook
+    working_directory: ~/quickstart
     steps:
-      - run: pip install jupyter
-      - run: pip install nb2hugo
-      - run: touch logs.txt
-      - run: python convert-to-md.py -d
+      - run: 
+          command: |
+            pip install jupyter
+            pip install nb2hugo
+            touch logs.txt
+            python convert-to-md.py -d
       - persist_to_workspace:
           root: content
           paths: .
