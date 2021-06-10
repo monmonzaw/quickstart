@@ -16,7 +16,6 @@ jobs:
   convert:
     docker:
       - image: jupyter/datascience-notebook
-    working_directory: ~/.
     steps:
       - run: pip install jupyter
       - run: pip install nb2hugo
