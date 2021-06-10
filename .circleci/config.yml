@@ -1,0 +1,40 @@
+version: 2
+
+workflows:
+  version: 2
+  build:
+    jobs:
+      - convert
+      - build:
+          requires:
+            - convert
+          filters:
+            branches:
+              only: main
+
+jobs:
+  convert:
+    docker:
+      - image: jupyter/datascience-notebook
+    working_directory: ~/jupyter
+    steps:
+      - run: git submodule sync --recursive && git submodule update --init --recursive
+      - run: pip install jupyter
+      - run: pip install nb2hugo
+      - run: python convert-to-md.py
+      - persist_to_workspace:
+          root: content
+          paths: .
+  build:
+    docker:
+      - image: cibuilds/hugo:latest
+    working_directory: ~/content
+    environment:
+      HUGO_BUILD_DIR: public
+    steps:
+      - run: apk update && apk add git
+      - checkout
+      - run: HUGO_ENV=production hugo -F -v -d $HUGO_BUILD_DIR
+      - persist_to_workspace:
+          root: public
+          paths: .
