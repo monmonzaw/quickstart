@@ -19,6 +19,7 @@ jobs:
     working_directory: /home/jovyan/quickstart
     steps:
       - run: pwd
+      - run: ll
       - run: pip install jupyter
       - run: pip install nb2hugo
       - run: touch logs.txt
