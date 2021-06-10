@@ -18,7 +18,7 @@ jobs:
       - image: jupyter/datascience-notebook
     working_directory: ~/quickstart
     steps:
-      - run: %pwd
+      - run: pwd
       - run: docker run -p 8888:8888 -v ~/quickstart:/home/jovyan/quickstart jupyter/datascience-notebook
       - run: pip install jupyter
       - run: pip install nb2hugo
