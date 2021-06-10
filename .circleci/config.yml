@@ -19,7 +19,8 @@ jobs:
     steps:
       - run: pip install jupyter
       - run: pip install nb2hugo
-      - run: python convert-to-md.py
+      - run: touch logs.txt
+      - run: python convert-to-md.py -d
       - persist_to_workspace:
           root: content
           paths: .
