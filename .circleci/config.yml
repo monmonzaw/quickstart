@@ -18,7 +18,6 @@ jobs:
       - image: jupyter/datascience-notebook
     working_directory: ~/.
     steps:
-      - run: git submodule sync --recursive && git submodule update --init --recursive
       - run: pip install jupyter
       - run: pip install nb2hugo
       - run: python convert-to-md.py
