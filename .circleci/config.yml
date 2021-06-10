@@ -16,7 +16,7 @@ jobs:
   convert:
     docker:
       - image: jupyter/datascience-notebook
-    working_directory: ~/jupyter
+    working_directory: ~/.
     steps:
       - run: git submodule sync --recursive && git submodule update --init --recursive
       - run: pip install jupyter
