@@ -35,8 +35,8 @@ jobs:
             touch logs.txt
             python convert-to-md.py -d
       - persist_to_workspace:
-          root: content
-          paths: .
+          root: .
+          paths: content
   build:
     docker:
       - image: cibuilds/hugo:latest
@@ -46,8 +46,8 @@ jobs:
           name: "build"
           command: hugo
       - persist_to_workspace:
-          root: public
-          paths: .
+          root: .
+          paths: public
   deploy:
     docker:
       - image: xueshanf/awscli
@@ -55,5 +55,3 @@ jobs:
       - checkout
       - attach_workspace:
           at: .
-      - run:
-          name: "Upload S3"
