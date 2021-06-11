@@ -1,13 +1,19 @@
 version: 2.1
 
 workflows:
-  version: 2
+  version: 2.1
   build:
     jobs:
       - convert
       - build:
           requires:
             - convert
+          filters:
+            branches:
+              only: main
+      - deploy:
+          requires:
+            - build
           filters:
             branches:
               only: main
@@ -22,8 +28,8 @@ jobs:
       - run: 
           name: Install packages
           command: |
-            pwd
-            ls -l
+            git submodule sync
+            git submodule update --init --recursive 
             pip install jupyter
             pip install nb2hugo
             touch logs.txt
@@ -34,13 +40,20 @@ jobs:
   build:
     docker:
       - image: cibuilds/hugo:latest
-    working_directory: ~/content
-    environment:
-      HUGO_BUILD_DIR: public
     steps:
-      - run: apk update && apk add git
       - checkout
-      - run: HUGO_ENV=production hugo -F -v -d $HUGO_BUILD_DIR
+      - run:
+          name: "build"
+          command: hugo
       - persist_to_workspace:
-          root: public
-          paths: .
+          root: .
+          paths: public
+  deploy:
+    docker:
+      - image: xueshanf/awscli
+    steps:
+      - checkout
+      - attach_workspace:
+          at: .
+      - run:
+          name: "Upload S3"
