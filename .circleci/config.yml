@@ -52,8 +52,11 @@ jobs:
     machine:
       enable: true
     steps:
+      - add_ssh_keys:
+          fingerprints:
+           - "SHA256:929A7onbiQzopbNEe//wAF1W/UqKbI3kCzBiqDs9cvU annexdev02monzaw@gmail.com"
       - checkout
       - run:
            name: Deploy Over SSH
            command: |
-             ssh hugo@192.168.107.138 "python -m http.server 8000"
+             ssh $SSH_USER@$SSH_HOST "python -m http.server 8000"
