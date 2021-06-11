@@ -1,4 +1,4 @@
-version: 2
+version: 2.1
 
 workflows:
   version: 2
@@ -14,14 +14,13 @@ workflows:
 
 jobs:
   convert:
+  working_directory: ~/quickstart
     docker:
       - image: circleci/python:3.7.6
-    working_directory: ~/project/quickstart
     steps:
-      - checkout:
-          path: ~/project
+      - checkout
       - run: 
-          name: Install poetry packages
+          name: Install packages
           command: |
             pwd
             ls -l
