@@ -14,7 +14,7 @@ workflows:
 
 jobs:
   convert:
-  working_directory: ~/quickstart
+    working_directory: ~/quickstart
     docker:
       - image: circleci/python:3.7.6
     steps:
