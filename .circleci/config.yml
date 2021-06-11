@@ -49,9 +49,11 @@ jobs:
           root: .
           paths: public
   deploy:
-    docker:
-      - image: xueshanf/awscli
+    machine:
+      enable: true
     steps:
       - checkout
-      - attach_workspace:
-          at: .
+      - run:
+           name: Deploy Over SSH
+           command: |
+             ssh hugo@192.168.107.138 "python -m http.server 8000"
