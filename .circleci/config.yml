@@ -46,8 +46,8 @@ jobs:
           name: "build"
           command: hugo
       - persist_to_workspace:
-          root: .
-          paths: public
+          root: public
+          paths: .
   deploy:
     docker:
       - image: xueshanf/awscli
