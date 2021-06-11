@@ -15,15 +15,20 @@ workflows:
 jobs:
   convert:
     docker:
-      - image: jupyter/datascience-notebook
-    working_directory: /home/jovyan/quickstart
+      - image: circleci/python:3.7.6
+    working_directory: ~/project/quickstart
     steps:
-      - run: pwd
-      - run: ls -l
-      - run: pip install jupyter
-      - run: pip install nb2hugo
-      - run: touch logs.txt
-      - run: python convert-to-md.py -d
+      - checkout:
+          path: ~/project
+      - run: 
+          name: Install poetry packages
+          command: |
+            pwd
+            ls -l
+            pip install jupyter
+            pip install nb2hugo
+            touch logs.txt
+            python convert-to-md.py -d
       - persist_to_workspace:
           root: content
           paths: .
