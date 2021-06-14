@@ -52,7 +52,7 @@ jobs:
     steps:
       - add_ssh_keys:
           fingerprints:
-           - "5b:ab:83:61:5b:c1:f5:8e:d0:89:33:ad:0b:0d:e8:ce"
+           - "SHA256:yT6wNEG+TU6Tamrwr0m20qFdkJs6nZQWYW8prCEMOAM annexdev02monzaw@gmail.com"
       - checkout
       - run:
            name: Deploy Over SSH
