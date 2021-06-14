@@ -49,8 +49,7 @@ jobs:
           root: .
           paths: public
   deploy:
-    machine:
-      enable: true
+    machine: true
     steps:
       - add_ssh_keys:
           fingerprints:
