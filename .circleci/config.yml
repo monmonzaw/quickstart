@@ -39,15 +39,17 @@ jobs:
           paths: content
   build:
     docker:
-      - image: cibuilds/hugo:latest
+      - image: z0li/hugo-builder:latest
     steps:
+      - add_ssh_keys:
+          fingerprints:
+           - "5b:ab:83:61:5b:c1:f5:8e:d0:89:33:ad:0b:0d:e8:ce"
       - checkout
+      - run: git submodule update --init
+      - run: hugo -v -s /src -d /src/public
       - run:
-          name: "build"
-          command: hugo
-      - persist_to_workspace:
-          root: .
-          paths: public
+          name: "test the generated html files"
+          command: htmlproofer /src/public --allow-hash-href --check-html --empty-alt-ignore --disable-external
   deploy:
     machine: true
     steps:
@@ -56,6 +58,5 @@ jobs:
            - "5b:ab:83:61:5b:c1:f5:8e:d0:89:33:ad:0b:0d:e8:ce"
       - checkout
       - run:
-           name: Deploy Over SSH
-           command: |
-                   ssh hugo@192.168.107.138 "python -m http.server 8888"
+           name: push to master branch
+           command: sh deploy.sh
