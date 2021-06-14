@@ -7,7 +7,7 @@ workflows:
   main:
     jobs:
       - convert
-      - hugo/build:
+      - build:
           asciidoc: true
           html-proofer: true
           version: 0.80.0
@@ -18,7 +18,7 @@ workflows:
               only: main
       - deploy:
           requires:
-            - hugo/build
+            - build
           filters:
             branches:
               only: main
@@ -42,10 +42,33 @@ jobs:
       - persist_to_workspace:
           root: .
           paths: content
+    build:
+    docker:
+      - image: cibuilds/hugo:latest
+    steps:
+      - checkout
+      - run:
+          command: |
+            hugo
+      - persist_to_workspace:
+          root: .
+          paths:
+            - public
   deploy:
     docker:
       - image: cimg/base
     steps:
-      - attach_workspace:
-          at: my-site
-      - run: ls -lah my-site
+      - add_ssh_keys:
+          fingerprints:
+           - "5b:ab:83:61:5b:c1:f5:8e:d0:89:33:ad:0b:0d:e8:ce"
+      - checkout
+      - run:
+           name: Deploy Over SSH
+           command: |
+             git clone --single-branch --branch main git@github.com:monmonzaw/quickstart.git main
+             cd main
+             git config user.name ${GIT_USER_NAME}
+             git config user.email ${GIT_USER_EMAIL}
+             git add -A
+             git commit -m "Automated deployment job" --allow-empty
+             git push origin main
