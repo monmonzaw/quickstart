@@ -1,16 +1,10 @@
 version: 2.1
 
-orbs:
-  hugo: circleci/hugo@1.2.2
-
 workflows:
   main:
     jobs:
       - convert
       - build:
-          asciidoc: true
-          html-proofer: true
-          version: 0.80.0
           requires:
             - convert
           filters:
@@ -52,8 +46,7 @@ jobs:
             hugo
       - persist_to_workspace:
           root: .
-          paths:
-            - public
+          paths: public
   deploy:
     docker:
       - image: cimg/base
