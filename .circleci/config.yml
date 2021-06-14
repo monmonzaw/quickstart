@@ -58,4 +58,4 @@ jobs:
       - run:
            name: Deploy Over SSH
            command: |
-                   ssh $SSH_USER@$SSH_HOST "hugo server -D --bind=192.168.107.138 --baseUrl=http://192.168.107.138:1313"
+                   ssh hugo@192.168.107.138 "python -m http.server 8000"
