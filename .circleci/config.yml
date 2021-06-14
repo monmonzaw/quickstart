@@ -43,17 +43,17 @@ jobs:
           root: .
           paths: content
     build:
-    docker:
-      - image: cibuilds/hugo:latest
-    steps:
-      - checkout
-      - run:
-          command: |
-            hugo
-      - persist_to_workspace:
-          root: .
-          paths:
-            - public
+      docker:
+        - image: cibuilds/hugo:latest
+      steps:
+        - checkout
+        - run:
+            command: |
+              hugo
+        - persist_to_workspace:
+            root: .
+            paths:
+              - public
   deploy:
     docker:
       - image: cimg/base
