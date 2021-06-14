@@ -50,7 +50,7 @@ jobs:
       - run: hugo -v -s ~/quickstart -d ~/quickstart/public
       - run:
           name: "test the generated html files"
-          command: htmlproofer /src/public --allow-hash-href --check-html --empty-alt-ignore --disable-external
+          command: htmlproofer ~/quickstart/public --allow-hash-href --check-html --empty-alt-ignore --disable-external
       - persist_to_workspace:
           root: .
           paths: public
