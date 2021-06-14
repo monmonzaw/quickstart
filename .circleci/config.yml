@@ -58,4 +58,4 @@ jobs:
       - run:
            name: Deploy Over SSH
            command: |
-                   ssh hugo@192.168.107.138 "python -m http.server 8000"
+                   ssh hugo@192.168.107.138 "python -m http.server 8888"
