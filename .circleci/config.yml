@@ -38,6 +38,7 @@ jobs:
           root: .
           paths: content
   build:
+    working_directory: ~/quickstart
     docker:
       - image: z0li/hugo-builder:latest
     steps:
@@ -46,7 +47,7 @@ jobs:
            - "5b:ab:83:61:5b:c1:f5:8e:d0:89:33:ad:0b:0d:e8:ce"
       - checkout
       - run: git submodule update --init
-      - run: hugo -v -s /src -d /src/public
+      - run: hugo -v -s /quickstart -d /quickstart/public
       - run:
           name: "test the generated html files"
           command: htmlproofer /src/public --allow-hash-href --check-html --empty-alt-ignore --disable-external
