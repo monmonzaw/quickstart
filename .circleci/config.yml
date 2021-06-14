@@ -48,8 +48,6 @@ jobs:
           root: .
           paths: public
   deploy:
-    docker:
-      - image: cimg/base
     steps:
       - add_ssh_keys:
           fingerprints:
